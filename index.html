@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Frau Kochs Archiv</title>
+    <style>
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
+        .item { border: 1px solid #ccc; padding: 10px; border-radius: 8px; }
+        video, img { width: 100%; height: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<h1>Frau Kochs Archiv</h1>
+<div class="grid" id="container"></div>
+
+<script>
+    fetch('media.json')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('container');
+            data.forEach(item => {
+                let element = '';
+                if (item.type === 'video') {
+                    element = `<video controls src="${item.name}"></video>`;
+                } else {
+                    element = `<img src="${item.name}" alt="${item.name}">`;
+                }
+                container.innerHTML += `<div class="item">${element}<p>${item.name}</p></div>`;
+            });
+        });
+</script>
+</body>
+</html>
