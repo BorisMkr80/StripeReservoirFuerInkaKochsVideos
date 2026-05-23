@@ -15,20 +15,13 @@
 <div class="grid" id="container"></div>
 
 <script>
-    fetch('media.json')
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('container');
-            data.forEach(item => {
-                let element = '';
-                if (item.type === 'video') {
-                    element = `<video controls src="${item.name}"></video>`;
-                } else {
-                    element = `<img src="${item.name}" alt="${item.name}">`;
-                }
-                container.innerHTML += `<div class="item">${element}<p>${item.name}</p></div>`;
-            });
-        });
+    if (item.type === 'video') {
+        element = `
+            <video controls>
+                <source src="${item.name}" type="video/mp4">
+                Dein Browser unterstützt das Videoformat nicht.
+            </video>`;
+    }
 </script>
 </body>
 </html>
