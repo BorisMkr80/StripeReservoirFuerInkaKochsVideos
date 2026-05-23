@@ -14,14 +14,34 @@
 <h1>Frau Kochs Archiv</h1>
 <div class="grid" id="container"></div>
 
-<script>
-    if (item.type === 'video') {
-        element = `
-            <video controls>
-                <source src="${item.name}" type="video/mp4">
-                Dein Browser unterstützt das Videoformat nicht.
-            </video>`;
-    }
+<script><script>
+    // 1. Die Datei laden
+    fetch('media.json')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('container');
+            
+            // 2. Durch die Liste gehen
+            data.forEach(item => {
+                let element = '';
+                
+                // 3. Den passenden Code erstellen
+                if (item.type === 'video') {
+                    element = `
+                        <video controls>
+                            <source src="${item.name}" type="video/mp4">
+                            Dein Browser unterstützt das Videoformat nicht.
+                        </video>`;
+                } else {
+                    element = `<img src="${item.name}" alt="${item.name}">`;
+                }
+
+                // 4. Alles in die Seite einfügen
+                container.innerHTML += `<div class="item">${element}<p>${item.name}</p></div>`;
+            });
+        })
+        .catch(error => console.error('Fehler beim Laden:', error));
+</script>
 </script>
 </body>
 </html>
